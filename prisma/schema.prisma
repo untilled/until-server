@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id          String   @id @default(uuid())
   email       String?  @unique
   isCertified Boolean  @default(false)
@@ -27,7 +27,7 @@ model Post {
   thumbnail   String?
   isPublished Boolean  @default(true)
   authorId    String
-  user        User     @relation(fields: [authorId], references: [id])
+  user        Users     @relation(fields: [authorId], references: [id])
   urlSlug     String   @unique
   likes       Int   @default(0)
   views       Int   @default(0)
@@ -41,7 +41,7 @@ model Comment {
   text      String
   deleted   Boolean  @default(false)
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      Users     @relation(fields: [userId], references: [id])
   postId    String
   post      Post     @relation(fields: [postId], references: [id])
 }
