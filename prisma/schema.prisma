@@ -22,7 +22,7 @@ model Users {
   following    Users[]       @relation("Following")
   followers    Users[]       @relation("Following")
   createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  updatedAt    DateTime?      @updatedAt
 }
 
 model Profile {
@@ -55,7 +55,7 @@ model Post {
   likes       PostLike[]
   comments    Comment[]  @relation()
   createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  updatedAt   DateTime?   @updatedAt
 }
 
 model PostLike {
@@ -78,7 +78,7 @@ model Comment {
   post      Post          @relation(fields: [postId], references: [id])
   likes     CommentLike[]
   createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  updatedAt DateTime?      @updatedAt
 }
 
 model CommentLike {
@@ -97,5 +97,5 @@ model Tag {
   thumbnail   String?
   posts       Post[]
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  updatedAt   DateTime? @updatedAt
 }
