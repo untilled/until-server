@@ -12,7 +12,7 @@ datasource db {
 
 model Users {
   id           String        @id @default(uuid())
-  email        String?       @unique
+  email        String       @unique
   profile      Profile?
   isCertified  Boolean       @default(false)
   posts        Post[]
@@ -30,7 +30,7 @@ model Profile {
   user   Users  @relation(fields: [userId], references: [id])
 
   profileName      String  @unique
-  blogName         String?
+  blogName         String
   backgroundImgUrl String?
   profileImgUrl    String?
   shortBio         String  @default("")
