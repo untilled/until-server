@@ -1,4 +1,4 @@
-import { Profile } from "@/users/domain/profile";
+import { Profile } from "@/domain/users/profile";
 
 export class User {
   constructor(

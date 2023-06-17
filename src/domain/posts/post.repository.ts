@@ -1,5 +1,5 @@
-import { Post } from "@/posts/domain/post";
-import { User } from "@/users/domain/user";
+import { Post } from "@/domain/posts/post";
+import { User } from "@/domain/users/user";
 
 export interface PostRepository {
   findById(id: string): Promise<Post | null>;

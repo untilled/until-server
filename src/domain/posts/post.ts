@@ -1,4 +1,4 @@
-import { User } from "@/users/domain/user";
+import { User } from "@/domain/users/user";
 
 export class Post {
   constructor(
@@ -16,8 +16,7 @@ export class Post {
     public comments: string[],
     public readonly createdAt: Date,
     public updatedAt: Date | null
-  ) {
-  }
+  ) {}
 
   public addComment(commentId: string): void {
     this.comments = [...this.comments, commentId];
