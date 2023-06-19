@@ -1,5 +1,5 @@
-import { User } from "@/users/domain/user";
-import { Post } from "@/posts/domain/post";
+import { User } from "@/domain/users/user";
+import { Post } from "@/domain/posts/post";
 
 export class Comment {
   constructor(
@@ -11,6 +11,5 @@ export class Comment {
     public likes: string[],
     public readonly createdAt: Date,
     public updatedAt: Date | null
-  ) {
-  }
+  ) {}
 }
