@@ -1,4 +1,11 @@
+import { User } from "@/domain/users/user";
+import { Post } from "@/domain/posts";
+
 export interface FeedOutputPort {
-  getPopularPosts(tags: string[]): Promise<any[]>;
-  getFollowerPosts(tags: string[]): Promise<any[]>;
+  getPopularPosts(): Promise<Post[]>;
+  getFollowerPosts(userId: number): Promise<Post[]>;
+
+  makeTestData(): Promise<void>;
+
+  getUserRanking(): Promise<User[]>;
 }

@@ -1,8 +1,8 @@
-import { User } from "@/domain/users/user";
+import { assert } from "@/util/assert";
+import { isNotEmptyString } from "@/util/validation";
 
 export class Profile {
   constructor(
-    public readonly userId: User["id"],
     public readonly profileName: string,
     public readonly blogName: string,
     public readonly backgroundImgUrl: string | null,
@@ -12,5 +12,8 @@ export class Profile {
     public readonly twitter: string | null,
     public readonly facebook: string | null,
     public readonly homepage: string | null
-  ) {}
+  ) {
+    assert(isNotEmptyString(this.profileName), "프로필 이름은 필수입니다.");
+    assert(isNotEmptyString(this.blogName), "블로그 이름은 필수입니다.");
+  }
 }
