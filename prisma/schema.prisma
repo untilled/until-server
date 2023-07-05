@@ -11,18 +11,17 @@ datasource db {
 }
 
 model Users {
-  id           String        @id @default(uuid())
-  email        String       @unique
-  profile      Profile?
-  isCertified  Boolean       @default(false)
-  posts        Post[]
-  comments     Comment[]
-  postLikes    PostLike[]
-  commentLikes CommentLike[]
-  following    Users[]       @relation("Following")
-  followers    Users[]       @relation("Following")
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime?      @updatedAt
+  id          String     @id @default(uuid())
+  email       String     @unique
+  profile     Profile?
+  posts       Post[]     @relation("Posts")
+  comments    Comment[]
+  starredPost Post[]     @relation("starredPost")
+  following   Users[]    @relation("Following")
+  followers   Users[]    @relation("Following")
+  activity    Activity[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime?  @updatedAt
 }
 
 model Profile {
@@ -40,62 +39,58 @@ model Profile {
   homepage         String?
 }
 
-model Post {
-  id          String     @id @default(uuid())
-  title       String
-  body        String
-  thumbnail   String?
-  isPublished Boolean    @default(true)
-  authorId    String
-  user        Users      @relation(fields: [authorId], references: [id])
-  urlSlug     String     @unique
-  tags        Tag[]
-  views       Int        @default(0)
-  postScore   Int        @default(0)
-  likes       PostLike[]
-  comments    Comment[]  @relation()
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime?   @updatedAt
+model Activity {
+  id               String       @id @default(dbgenerated())
+  userId           String
+  user             Users        @relation(fields: [userId], references: [id])
+  activityTypeName String
+  activityType     ActivityType @relation(fields: [activityTypeName], references: [name])
+  activityData     String?
+  createdAt        DateTime     @default(now())
 }
 
-model PostLike {
-  id        String   @id @default(uuid())
-  userId    String
-  user      Users    @relation(fields: [userId], references: [id])
-  postId    String
-  post      Post     @relation(fields: [postId], references: [id])
-  createdAt DateTime @default(now())
+model ActivityType {
+  name     String     @id
+  Activity Activity[]
+}
+
+model Post {
+  id           String    @id @default(uuid())
+  title        String
+  body         String
+  thumbnail    String?
+  isPublished  Boolean   @default(true)
+  authorId     String
+  user         Users     @relation(name: "Posts", fields: [authorId], references: [id])
+  urlSlug      String    @unique
+  tags         Tag[]
+  views        Int       @default(0)
+  postScore    Int       @default(0)
+  starredUsers Users[]   @relation("starredPost")
+  comments     Comment[] @relation()
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
 }
 
 model Comment {
-  id        String        @id @default(uuid())
+  id        String    @id @default(uuid())
   replyTo   String
   text      String
-  deleted   Boolean       @default(false)
+  deleted   Boolean   @default(false)
   userId    String
-  user      Users         @relation(fields: [userId], references: [id])
+  user      Users     @relation(fields: [userId], references: [id])
   postId    String
-  post      Post          @relation(fields: [postId], references: [id])
-  likes     CommentLike[]
-  createdAt DateTime      @default(now())
-  updatedAt DateTime?      @updatedAt
-}
-
-model CommentLike {
-  id        String   @id @default(uuid())
-  userId    String
-  user      Users    @relation(fields: [userId], references: [id])
-  commentId String
-  comment   Comment  @relation(fields: [commentId], references: [id])
-  createdAt DateTime @default(now())
+  post      Post      @relation(fields: [postId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Tag {
-  id          String   @id @default(uuid())
-  name        String   @unique
+  id          String    @id @default(uuid())
+  name        String    @unique
   description String?
   thumbnail   String?
   posts       Post[]
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
 }
