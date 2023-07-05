@@ -20,11 +20,16 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@fxts/core": "^0.16.0",
+    "@js-joda/core": "^5.5.3",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.3.0",
     "@prisma/client": "^4.14.0",
+    "bcrypt": "^5.1.0",
+    "class-enum": "^0.1.0-beta.3",
+    "js-joda": "^1.11.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.6.3"
@@ -37,6 +42,7 @@
     "@types/jest": "29.5.0",
     "@types/node": "18.15.11",
     "@types/supertest": "^2.0.11",
+    "@types/bcrypt": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.0.1",
@@ -68,7 +74,10 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/$1"
+    }
   },
   "packageManager": "yarn@2.4.2"
 }
