@@ -1,10 +1,10 @@
-import { Controller, Get, Inject, Query } from "@nestjs/common";
+import { Controller, Get, Inject } from "@nestjs/common";
 import { FeedUsecase } from "@/feed/application/usecases/FeedUsecase";
 
 interface PostDTO {
   id: string;
   title: string;
-  thumbnail: string;
+  thumbnail: string | null;
   description: string;
   tags: string[];
   date: string;
@@ -24,12 +24,22 @@ export class FeedController {
   ) {}
 
   @Get("/popular")
-  async getPopularPosts(@Query("tags") tags?: string[]): Promise<PostDTO[]> {
-    return await this.feedUsecase.getPopularPosts(tags ?? []);
+  async getPopularPosts(): Promise<PostDTO[]> {
+    return await this.feedUsecase.getPopularPosts();
   }
 
   @Get("/follower")
-  async getFollowerPosts(@Query("tags") tags?: string[]): Promise<PostDTO[]> {
-    return await this.feedUsecase.getFollowerPosts(tags ?? []);
+  async getFollowerPosts(): Promise<PostDTO[]> {
+    return await this.feedUsecase.getFollowerPosts();
+  }
+
+  @Get("/ranking")
+  async getUserRanking(): Promise<any> {
+    return await this.feedUsecase.getUserRanking();
+  }
+
+  @Get("/test")
+  async makeTestData(): Promise<void> {
+    return this.feedUsecase.makeTestData();
   }
 }

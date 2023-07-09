@@ -8,11 +8,19 @@ export class FeedInputPort implements FeedUsecase {
     @Inject("FeedOutputPort") private readonly feedOutputPort: FeedOutputPort
   ) {}
 
-  async getFollowerPosts(tags: string[]): Promise<any[]> {
-    return this.feedOutputPort.getFollowerPosts(tags);
+  async getFollowerPosts(): Promise<any[]> {
+    return this.feedOutputPort.getFollowerPosts(1);
   }
 
-  async getPopularPosts(tags: string[]): Promise<any[]> {
-    return this.feedOutputPort.getPopularPosts(tags);
+  async getPopularPosts(): Promise<any[]> {
+    return this.feedOutputPort.getPopularPosts();
+  }
+
+  async getUserRanking(): Promise<any> {
+    return this.feedOutputPort.getUserRanking();
+  }
+
+  async makeTestData(): Promise<void> {
+    return this.feedOutputPort.makeTestData();
   }
 }
